@@ -1,6 +1,7 @@
 package kejuntong.com.samplemoduleapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -55,11 +56,11 @@ public class RegisterActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                spinner.setVisibility(View.VISIBLE);
-
-                if (email.getText() == null || password.getText() == null){
+                if (email.getText().toString().isEmpty() || password.getText().toString().isEmpty()){
                     return;
                 }
+
+                spinner.setVisibility(View.VISIBLE);
 
                 mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                         .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
@@ -74,6 +75,7 @@ public class RegisterActivity extends Activity {
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     Toast.makeText(RegisterActivity.this, "Authentication success.",
                                             Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
 //                            updateUI(user);
                                 } else {
                                     // If sign in fails, display a message to the user.

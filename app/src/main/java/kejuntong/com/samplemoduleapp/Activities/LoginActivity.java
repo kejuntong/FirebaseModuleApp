@@ -1,4 +1,4 @@
-package kejuntong.com.samplemoduleapp;
+package kejuntong.com.samplemoduleapp.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import kejuntong.com.samplemoduleapp.R;
 
 /**
  * Created by kejuntong on 2018-04-22.
@@ -57,6 +59,15 @@ public class LoginActivity extends Activity {
         });
 
         spinner = findViewById(R.id.progress_bar);
+
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null){
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+        } else {
+            Toast.makeText(LoginActivity.this, "null", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void setLoginButton(){

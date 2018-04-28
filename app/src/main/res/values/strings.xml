@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">SampleModuleApp</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
 
     <string name="enter_email">Enter email</string>
     <string name="enter_password">Enter your password</string>
@@ -11,4 +8,8 @@
     <string name="register">Register</string>
     <string name="register_cap">REGISTER</string>
     <string name="retype_your_password">Re-type your password</string>
+
+    <string name="page_1">Page 1</string>
+    <string name="page_2">Page 2</string>
+    <string name="page_3">Page 3</string>
 </resources>

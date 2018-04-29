@@ -1,5 +1,6 @@
 package kejuntong.com.samplemoduleapp.Activities;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import kejuntong.com.samplemoduleapp.ModelClasses.Post;
 import kejuntong.com.samplemoduleapp.R;
+import kejuntong.com.samplemoduleapp.UtilClasses.Constants;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -30,6 +32,7 @@ public class HomeActivity extends AppCompatActivity {
     TextView mTextMessage;
     EditText postInput;
     Button testButton;
+    Button uploadImageButton;
     TextView textData;
     Button logoutButton;
 
@@ -46,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         postInput = findViewById(R.id.post_input);
         testButton = findViewById(R.id.button_test);
+        uploadImageButton = findViewById(R.id.button_upload_image);
         textData = findViewById(R.id.text_data);
         logoutButton = findViewById(R.id.button_logout);
         bottomNavigationBar = (BottomNavigationView) findViewById(R.id.navigation);
@@ -75,6 +79,15 @@ public class HomeActivity extends AppCompatActivity {
                 String key = myRef.push().getKey();
                 myRef.child(key).setValue(new Post(currentUser == null ? "me" : currentUser.getUid(),
                         postInput.getText().toString()));
+            }
+        });
+
+        uploadImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ImageCropActivity.class);
+                intent.putExtra(Constants.CAPTURE_PHOTO_FROM, Constants.PHOTO_FROM_GALLERY);
+                startActivity(intent);
             }
         });
 

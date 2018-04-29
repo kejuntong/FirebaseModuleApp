@@ -1,79 +1,27 @@
 {
   "project_info": {
-    "project_number": "628273476842",
-    "firebase_url": "https://testwebapp-20f08.firebaseio.com",
-    "project_id": "testwebapp-20f08",
-    "storage_bucket": "testwebapp-20f08.appspot.com"
+    "project_number": "490221670061",
+    "firebase_url": "https://moduleapp-7474c.firebaseio.com",
+    "project_id": "moduleapp-7474c",
+    "storage_bucket": "moduleapp-7474c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:628273476842:android:41b2b6f5005098e5",
-        "android_client_info": {
-          "package_name": "com.example.rzk8t3.testfirebase"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "628273476842-fp0umamo7d52gpvm288megc6as27ocrr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.rzk8t3.testfirebase",
-            "certificate_hash": "d39cb0356cdaf323790c58171db02505a2b57998"
-          }
-        },
-        {
-          "client_id": "628273476842-isesfmq5sb7222rerqbd2djnic2v7r50.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBmK0U6PhdFbLt6PBlCfaJDqN-p-goxxPQ"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "628273476842-isesfmq5sb7222rerqbd2djnic2v7r50.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:628273476842:android:a58935109eb7e2d1",
+        "mobilesdk_app_id": "1:490221670061:android:a58935109eb7e2d1",
         "android_client_info": {
           "package_name": "kejuntong.com.samplemoduleapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "628273476842-lqjjlso9b4iq39o7m0s0iovfcu4qh67i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "kejuntong.com.samplemoduleapp",
-            "certificate_hash": "381e9defd39e18b84998b40d468a1f4b8f62d612"
-          }
-        },
-        {
-          "client_id": "628273476842-isesfmq5sb7222rerqbd2djnic2v7r50.apps.googleusercontent.com",
+          "client_id": "490221670061-5jvv5d90f0qkd3909s59k932dio1d60c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBmK0U6PhdFbLt6PBlCfaJDqN-p-goxxPQ"
+          "current_key": "AIzaSyBEQWZ0wRUbH9Q-iIeuv1pzY8KjTx7zivs"
         }
       ],
       "services": {
@@ -81,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "628273476842-isesfmq5sb7222rerqbd2djnic2v7r50.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

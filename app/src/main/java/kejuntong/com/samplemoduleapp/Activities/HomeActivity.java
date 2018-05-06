@@ -1,57 +1,41 @@
 package kejuntong.com.samplemoduleapp.Activities;
 
-import android.content.Intent;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import kejuntong.com.samplemoduleapp.ModelClasses.Post;
+import kejuntong.com.samplemoduleapp.Fragments.AllPostFragment;
+import kejuntong.com.samplemoduleapp.Fragments.BaseFragment;
+import kejuntong.com.samplemoduleapp.Fragments.TestFragment;
 import kejuntong.com.samplemoduleapp.R;
 import kejuntong.com.samplemoduleapp.UtilClasses.Constants;
 
 public class HomeActivity extends AppCompatActivity {
 
+    RelativeLayout fragmentContainer;
     BottomNavigationView bottomNavigationBar;
 
-    TextView mTextMessage;
-    EditText postInput;
-    Button testButton;
-    Button uploadImageButton;
-    TextView textData;
-    Button logoutButton;
-
-    FirebaseDatabase firebaseDatabase;
     FirebaseUser currentUser;
+
+    AllPostFragment allPostFragment;
+    TestFragment testFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
-
-        mTextMessage = (TextView) findViewById(R.id.message);
-        postInput = findViewById(R.id.post_input);
-        testButton = findViewById(R.id.button_test);
-        uploadImageButton = findViewById(R.id.button_upload_image);
-        textData = findViewById(R.id.text_data);
-        logoutButton = findViewById(R.id.button_logout);
+        fragmentContainer = findViewById(R.id.fragment_container);
         bottomNavigationBar = (BottomNavigationView) findViewById(R.id.navigation);
 
         setBottomNavigationBar();
@@ -69,38 +53,6 @@ public class HomeActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
 
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (postInput.getText().toString().isEmpty()){
-                    return;
-                }
-                DatabaseReference myRef = firebaseDatabase.getReference("post");
-                String key = myRef.push().getKey();
-                myRef.child(key).setValue(new Post(currentUser == null ? "me" : currentUser.getUid(),
-                        postInput.getText().toString()));
-            }
-        });
-
-        uploadImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, ImageCropActivity.class);
-                intent.putExtra(Constants.CAPTURE_PHOTO_FROM, Constants.PHOTO_FROM_GALLERY);
-                startActivity(intent);
-            }
-        });
-
-        setOnDataChange();
-
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                mAuth.signOut();
-                finish();
-            }
-        });
     }
 
     private void setBottomNavigationBar(){
@@ -110,13 +62,19 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_page_1:
-                        mTextMessage.setText(R.string.page_1);
+                        if (allPostFragment == null){
+                            allPostFragment = new AllPostFragment();
+                        }
+                        switchFragment(allPostFragment);
                         return true;
                     case R.id.navigation_page_2:
-                        mTextMessage.setText(R.string.page_2);
+
                         return true;
                     case R.id.navigation_page_3:
-                        mTextMessage.setText(R.string.page_3);
+                        if (testFragment == null){
+                            testFragment = new TestFragment();
+                        }
+                        switchFragment(testFragment);
                         return true;
                 }
                 return false;
@@ -124,25 +82,42 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void setOnDataChange(){
-        DatabaseReference myRef = firebaseDatabase.getReference("post");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String allPosts = "";
-                for (DataSnapshot postData : dataSnapshot.getChildren()){
-                    Post post = postData.getValue(Post.class);
-                    allPosts = allPosts + "post by: " + post.getAuthor() +
-                            ", post content: " + post.getContent() + "\n";
-                }
-                textData.setText(allPosts);
-            }
+    public void switchFragment(BaseFragment fragment) {
+        hideFragments(fragment.getFragmentName());
+        FragmentTransaction txn = getFragmentManager().beginTransaction();
+        Fragment existingFragment = getFragmentManager().findFragmentByTag(fragment.getFragmentName());
+        if (existingFragment != null) {
+            txn.show(existingFragment).commit();
+        } else {
+            txn.add(R.id.fragment_container, fragment, fragment.getFragmentName()).commit();
+            getFragmentManager().executePendingTransactions();
+        }
+    }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+    private void hideFragments(String excludeFragmentName) {
+        Fragment firstFragment = getFragmentManager().findFragmentByTag(Constants.FIRST_FRAGMENT);
+        Fragment secondFragment = getFragmentManager().findFragmentByTag(Constants.SECOND_FRAGMENT);
+        Fragment thirdFragment = getFragmentManager().findFragmentByTag(Constants.THIRD_FRAGMENT);
 
-            }
-        });
+        FragmentTransaction txn = getFragmentManager().beginTransaction();
+
+        if (firstFragment != null
+                && excludeFragmentName != null && !excludeFragmentName.equals(Constants.FIRST_FRAGMENT)) {
+            txn.hide(firstFragment);
+        }
+
+        if (secondFragment != null
+                && excludeFragmentName != null && !excludeFragmentName.equals(Constants.SECOND_FRAGMENT)){
+            txn.hide(secondFragment);
+        }
+
+        if (thirdFragment != null
+                && excludeFragmentName != null && !excludeFragmentName.equals(Constants.THIRD_FRAGMENT)){
+            txn.hide(thirdFragment);
+        }
+
+        txn.commit();
+        getFragmentManager().executePendingTransactions();
     }
 
     @Override

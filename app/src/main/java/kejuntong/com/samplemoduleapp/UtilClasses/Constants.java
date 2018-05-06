@@ -6,6 +6,10 @@ package kejuntong.com.samplemoduleapp.UtilClasses;
 
 public class Constants {
 
+    public final static String FIRST_FRAGMENT = "first_fragment";
+    public final static String SECOND_FRAGMENT = "second_fragment";
+    public final static String THIRD_FRAGMENT = "third_fragment";
+
     public final static int PHOTO_FROM_GALLERY = 1;
     public final static int PHOTO_FROM_CAMERA = 2;
 

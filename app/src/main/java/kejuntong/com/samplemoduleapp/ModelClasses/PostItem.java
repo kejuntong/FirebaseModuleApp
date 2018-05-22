@@ -26,8 +26,7 @@ public class PostItem {
     public String getPhotoUrl(){
         return photoURL;
     }
-    public String getUserId(){
+    public String getUid(){
         return this.uid;
     }
-
 }

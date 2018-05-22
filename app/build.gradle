@@ -31,6 +31,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:15.0.0'
     implementation 'com.google.firebase:firebase-storage:15.0.0'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.5.+'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.firebaseui:firebase-ui-storage:0.6.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

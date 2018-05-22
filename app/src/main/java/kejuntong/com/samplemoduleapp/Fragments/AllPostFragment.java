@@ -50,7 +50,7 @@ public class AllPostFragment extends BaseFragment {
         allPostRecyclerView.setLayoutManager(linearLayoutManager);
 
         postItems = new ArrayList<>();
-        mAdapter = new AllPostAdapter(getActivity(), postItems);
+        mAdapter = new AllPostAdapter(getActivity(), firebaseDatabase, postItems);
         allPostRecyclerView.setAdapter(mAdapter);
 
         setOnDataChange();

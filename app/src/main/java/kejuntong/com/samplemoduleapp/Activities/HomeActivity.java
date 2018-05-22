@@ -53,6 +53,9 @@ public class HomeActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
 
+        allPostFragment = new AllPostFragment();
+        switchFragment(allPostFragment);
+
     }
 
     private void setBottomNavigationBar(){

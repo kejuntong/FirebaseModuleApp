@@ -30,16 +30,14 @@ public class AllPostAdapter extends RecyclerView.Adapter<AllPostAdapter.ViewHold
 
     private Context mContext;
     private LayoutInflater mInflater;
-    private ArrayList<PostItem> itemList;
+    private ArrayList<PostItem> postList;
+    private ArrayList<User> userList;
 
-    private DatabaseReference userDbReference;
-
-    public AllPostAdapter(Context context, FirebaseDatabase database, ArrayList<PostItem> postItemList){
+    public AllPostAdapter(Context context, ArrayList<PostItem> postItemList, ArrayList<User> userList){
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
-        this.itemList = postItemList;
-
-        this.userDbReference = database.getReference("users");
+        this.postList = postItemList;
+        this.userList = userList;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -67,37 +65,25 @@ public class AllPostAdapter extends RecyclerView.Adapter<AllPostAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        PostItem item = itemList.get(position);
+        PostItem postItem = postList.get(position);
+        User user = userList.get(position);
+        if (user != null) {
+            holder.posterNameText.setText(user.getUsername());
+            Glide.with(mContext).load(user.getProfileImageUrl()).into(holder.profileImage);
+        } else {
+            holder.posterNameText.setText("empty user");
+            holder.profileImage.setImageBitmap(null);
+        }
 
-        String posterUid = item.getUid();
-        userDbReference.child(posterUid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                if (user != null) {
-                    holder.posterNameText.setText(user.getUsername());
-                    Glide.with(mContext).load(user.getProfileImageUrl()).into(holder.profileImage);
-                } else {
-                    holder.posterNameText.setText("wtf");
-                    holder.profileImage.setImageBitmap(null);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        String imageUrl = item.getPhotoUrl();
+        String imageUrl = postItem.getPhotoUrl();
         Glide.with(mContext).load(imageUrl).into(holder.postImage);
 
-        holder.captionText.setText(item.getCaption());
+        holder.captionText.setText(postItem.getCaption());
     }
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return postList.size();
     }
 
 

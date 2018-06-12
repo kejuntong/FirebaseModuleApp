@@ -7,12 +7,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import kejuntong.com.samplemoduleapp.Fragments.AllPostFragment;
 import kejuntong.com.samplemoduleapp.Fragments.BaseFragment;
@@ -52,6 +56,24 @@ public class HomeActivity extends AppCompatActivity {
                     + ", photoUrl: " + photoUrl + ", emailVerified: " + emailVerified + " uid: " + uid,
                     Toast.LENGTH_LONG).show();
         }
+
+
+//        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+//                .setDisplayName("Kevin Tong")
+//                .setPhotoUri(Uri.parse("http://kejuntong.com/1.pic.jpg"))
+//                .build();
+//
+//        currentUser.updateProfile(profileUpdates)
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        Log.d("Kejun", "enter");
+//                        if (task.isSuccessful()) {
+//                            Log.d("Kejun", "success");
+//                        }
+//                    }
+//                });
+
 
         allPostFragment = new AllPostFragment();
         switchFragment(allPostFragment);

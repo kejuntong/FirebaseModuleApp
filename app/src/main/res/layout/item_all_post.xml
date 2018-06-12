@@ -48,7 +48,7 @@
             <TextView
                 android:id="@+id/post_caption"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/post_image"
                 android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
@@ -56,17 +56,38 @@
                 android:gravity="center_vertical"
                 android:textSize="18sp" />
 
-            <!--<ImageButton-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_alignParentEnd="true"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:background="?attr/selectableItemBackgroundBorderless"-->
-                <!--android:layout_below="@id/post_image"-->
-                <!--android:layout_marginRight="5dp"-->
-                <!--android:layout_marginEnd="5dp"-->
-                <!--android:contentDescription="FavButtonDesc" />-->
+            <ImageButton
+                android:id="@+id/button_like"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="centerCrop"
+                android:background="@color/transparent"
+                android:layout_below="@+id/post_caption"
+                android:src="@drawable/ic_button_like"/>
 
+            <ImageButton
+                android:id="@+id/button_reply"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="centerCrop"
+                android:background="@color/transparent"
+                android:layout_below="@+id/post_caption"
+                android:layout_toRightOf="@+id/button_like"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_button_reply"/>
+
+            <TextView
+                android:id="@+id/text_last_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/button_reply"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/steelblue"
+                android:textSize="16dp"
+                android:visibility="gone"/>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

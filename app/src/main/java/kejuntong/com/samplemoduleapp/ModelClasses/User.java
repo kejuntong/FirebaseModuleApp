@@ -14,6 +14,12 @@ public class User {
 
     }
 
+    public User(String email, String profileImageUrl, String username){
+        this.email = email;
+        this.profileImageUrl = profileImageUrl;
+        this.username = username;
+    }
+
     public String getEmail(){
         return this.email;
     }

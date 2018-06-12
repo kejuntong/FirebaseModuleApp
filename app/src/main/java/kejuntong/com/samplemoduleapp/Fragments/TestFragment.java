@@ -21,6 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 import kejuntong.com.samplemoduleapp.Activities.HomeActivityBackup;
 import kejuntong.com.samplemoduleapp.Activities.ImageCropActivity;
 import kejuntong.com.samplemoduleapp.ModelClasses.Post;
+import kejuntong.com.samplemoduleapp.ModelClasses.PostItem;
+import kejuntong.com.samplemoduleapp.ModelClasses.User;
 import kejuntong.com.samplemoduleapp.R;
 import kejuntong.com.samplemoduleapp.UtilClasses.Constants;
 
@@ -71,13 +73,17 @@ public class TestFragment extends BaseFragment {
                 if (postInput.getText().toString().isEmpty()){
                     return;
                 }
-                DatabaseReference myRef = firebaseDatabase.getReference("post");
+                DatabaseReference myRef = firebaseDatabase.getReference("Posts2");
                 String key = myRef.push().getKey();
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                myRef.child(key).setValue(new Post(currentUser == null ? "me" : currentUser.getUid(),
-                        postInput.getText().toString()));
+                myRef.child(key).setValue(new PostItem(postInput.getText().toString(), "http://kejuntong.com/1.pic.jpg", currentUser.getUid(), "test comment from Kevin", currentUser.getDisplayName() ));
             }
         });
+
+
+//        DatabaseReference myRef = firebaseDatabase.getReference("users");
+//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//        myRef.child("DPxHkrYwr4WUmzKUEHhDx65rbOz2").setValue(new User(currentUser.getEmail(), currentUser.getPhotoUrl().toString(), currentUser.getDisplayName()));
 
         uploadImageButton.setOnClickListener(new View.OnClickListener() {
             @Override

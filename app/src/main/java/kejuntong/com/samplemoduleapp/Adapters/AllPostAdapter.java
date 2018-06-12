@@ -2,6 +2,7 @@ package kejuntong.com.samplemoduleapp.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class AllPostAdapter extends RecyclerView.Adapter<AllPostAdapter.ViewHold
         TextView posterNameText;
         TextView captionText;
         ImageView postImage;
+        TextView lastCommentText;
     }
 
     @Override
@@ -60,6 +62,7 @@ public class AllPostAdapter extends RecyclerView.Adapter<AllPostAdapter.ViewHold
         viewHolder.posterNameText = view.findViewById(R.id.poster_name);
         viewHolder.captionText = view.findViewById(R.id.post_caption);
         viewHolder.postImage = view.findViewById(R.id.post_image);
+        viewHolder.lastCommentText = view.findViewById(R.id.text_last_comment);
         return viewHolder;
     }
 
@@ -67,6 +70,7 @@ public class AllPostAdapter extends RecyclerView.Adapter<AllPostAdapter.ViewHold
     public void onBindViewHolder(final ViewHolder holder, int position) {
         PostItem postItem = postList.get(position);
         User user = userList.get(position);
+
         if (user != null) {
             holder.posterNameText.setText(user.getUsername());
             Glide.with(mContext).load(user.getProfileImageUrl()).into(holder.profileImage);
@@ -75,10 +79,19 @@ public class AllPostAdapter extends RecyclerView.Adapter<AllPostAdapter.ViewHold
             holder.profileImage.setImageBitmap(null);
         }
 
-        String imageUrl = postItem.getPhotoUrl();
+        String imageUrl = postItem.getPhotoURL();
         Glide.with(mContext).load(imageUrl).into(holder.postImage);
 
         holder.captionText.setText(postItem.getCaption());
+
+        String lastComment = postItem.getLatestCommentText();
+        if (lastComment != null){
+            holder.lastCommentText.setVisibility(View.VISIBLE);
+            String commentText = postItem.getLatestCommentPoster() + ": " + lastComment;
+            holder.lastCommentText.setText(commentText);
+        } else {
+            holder.lastCommentText.setVisibility(View.GONE);
+        }
     }
 
     @Override

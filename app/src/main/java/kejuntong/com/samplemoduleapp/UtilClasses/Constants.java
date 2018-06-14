@@ -16,4 +16,5 @@ public class Constants {
     public final static String CROPPED_IMAGE_FILE = "cropped_image";
     public final static String CAPTURE_PHOTO_FROM = "photo_from";
 
+    public final static String POST_KEY = "post_key";
 }

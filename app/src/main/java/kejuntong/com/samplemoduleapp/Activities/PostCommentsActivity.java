@@ -1,13 +1,10 @@
-package kejuntong.com.samplemoduleapp.Fragments;
+package kejuntong.com.samplemoduleapp.Activities;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,78 +14,65 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import kejuntong.com.samplemoduleapp.Adapters.AllPostAdapter;
-import kejuntong.com.samplemoduleapp.ModelClasses.PostItem;
+import kejuntong.com.samplemoduleapp.Adapters.PostCommentsAdapter;
+import kejuntong.com.samplemoduleapp.ModelClasses.Comment;
 import kejuntong.com.samplemoduleapp.ModelClasses.User;
 import kejuntong.com.samplemoduleapp.R;
 import kejuntong.com.samplemoduleapp.UtilClasses.Constants;
-import kejuntong.com.samplemoduleapp.UtilClasses.LoadFBDataSynchronously;
 
 /**
- * Created by kejuntong on 2018-05-06.
+ * Created by kejuntong on 2018-06-12.
  */
 
-public class AllPostFragment extends BaseFragment {
+public class PostCommentsActivity extends Activity {
 
-    final static String TAG = "AllPostFragment";
-
-    View fragmentView;
     FirebaseDatabase firebaseDatabase;
 
-    RecyclerView allPostRecyclerView;
-    AllPostAdapter mAdapter;
-    ArrayList<PostItem> postItems;
-    ArrayList<String> postKeys;
+    RecyclerView mRecyclerView;
+    PostCommentsAdapter mAdapter;
+    ArrayList<Comment> commentArrayList;
     ArrayList<User> posters;
 
-    public AllPostFragment(){
-        setFragmentName(Constants.FIRST_FRAGMENT);
-    }
+    String postKey;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_post_comments);
 
+        postKey = getIntent().getStringExtra(Constants.POST_KEY);
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        fragmentView = inflater.inflate(R.layout.fragment_all_post, container, false);
-        allPostRecyclerView = fragmentView.findViewById(R.id.all_post_recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        allPostRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView = findViewById(R.id.comments_recycler_view);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
 
-        postItems = new ArrayList<>();
-        postKeys = new ArrayList<>();
+        commentArrayList = new ArrayList<>();
         posters = new ArrayList<>();
-        mAdapter = new AllPostAdapter(getActivity(), postItems, postKeys, posters);
-        allPostRecyclerView.setAdapter(mAdapter);
+        mAdapter = new PostCommentsAdapter(this, commentArrayList, posters);
+        mRecyclerView.setAdapter(mAdapter);
 
         loadData();
-
-        return fragmentView;
     }
 
     private void loadData(){
-        DatabaseReference myRef = firebaseDatabase.getReference("Posts2");
+        DatabaseReference myRef = firebaseDatabase.getReference("post-comment-2").child(postKey);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long postCount = dataSnapshot.getChildrenCount();
-                Log.d(TAG, "total count: " + postCount);
 
-                postItems.clear();
-                postKeys.clear();
+                commentArrayList.clear();
                 posters.clear();
                 int position = 0;
                 for (DataSnapshot postData : dataSnapshot.getChildren()){
-                    PostItem post = postData.getValue(PostItem.class);
-                    postItems.add(post);
-                    postKeys.add(postData.getKey());
+                    Comment comment = postData.getValue(Comment.class);
+                    commentArrayList.add(comment);
                     posters.add(null);
-                    if (post != null) {
-                        fetchUser(position, post.getUid(), postCount);
+                    if (comment != null) {
+                        fetchUser(position, comment.getUid(), postCount);
                     }
                     position++;
-                    Log.d(TAG, "position: " + position);
                 }
 
                 mAdapter.notifyDataSetChanged();
@@ -107,13 +91,6 @@ public class AllPostFragment extends BaseFragment {
         }
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("users").child(uid);
 
-//        DataSnapshot dataSnapshot = LoadFBDataSynchronously.loadSynchronous(myRef);
-//        User user = dataSnapshot.getValue(User.class);
-//        posters.set(position, user);
-//        if (position == postCount){
-//            mAdapter.notifyDataSetChanged();
-//        }
-
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -131,5 +108,4 @@ public class AllPostFragment extends BaseFragment {
             }
         });
     }
-
 }

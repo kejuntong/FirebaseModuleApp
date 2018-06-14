@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import kejuntong.com.samplemoduleapp.Activities.HomeActivityBackup;
 import kejuntong.com.samplemoduleapp.Activities.ImageCropActivity;
+import kejuntong.com.samplemoduleapp.ModelClasses.Comment;
 import kejuntong.com.samplemoduleapp.ModelClasses.Post;
 import kejuntong.com.samplemoduleapp.ModelClasses.PostItem;
 import kejuntong.com.samplemoduleapp.ModelClasses.User;
@@ -70,6 +71,9 @@ public class TestFragment extends BaseFragment {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+//                testFunc();
+
                 if (postInput.getText().toString().isEmpty()){
                     return;
                 }
@@ -105,6 +109,59 @@ public class TestFragment extends BaseFragment {
             }
         });
 
+
+
+
+
+
+
+//        DatabaseReference myRef = firebaseDatabase.getReference("post-comment-2");
+//        myRef.child("test-comment-id").setValue(new Comment("test", "id"));
+
+
+
+
+    }
+
+
+    private void testFunc(){
+        DatabaseReference postCommentRef = FirebaseDatabase.getInstance().getReference("post-comment");
+        postCommentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postComment : dataSnapshot.getChildren()){
+                    final String postKey = postComment.getKey();
+                    for (DataSnapshot commentId : postComment.getChildren()){
+                        final String commentKey = commentId.getKey();
+                        DatabaseReference commentRef = FirebaseDatabase.getInstance().getReference("comments").child(commentKey);
+
+
+
+                        commentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Comment comment = dataSnapshot.getValue(Comment.class);
+                                DatabaseReference myRef = firebaseDatabase.getReference("post-comment-2").child(postKey).child(commentKey);
+                                myRef.setValue(comment);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void setOnDataChange(){

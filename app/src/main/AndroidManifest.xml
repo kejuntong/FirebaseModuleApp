@@ -23,6 +23,7 @@
         <activity android:name=".Activities.HomeActivity"/>
         <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".Activities.ImageCropActivity" />
+        <activity android:name=".Activities.PostCommentsActivity" />
 
     </application>
 

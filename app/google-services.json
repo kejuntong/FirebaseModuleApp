@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "490221670061",
-    "firebase_url": "https://moduleapp-7474c.firebaseio.com",
-    "project_id": "moduleapp-7474c",
-    "storage_bucket": "moduleapp-7474c.appspot.com"
+    "project_number": "267865195383",
+    "firebase_url": "https://samplemoduleappkevin.firebaseio.com",
+    "project_id": "samplemoduleappkevin",
+    "storage_bucket": "samplemoduleappkevin.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:490221670061:android:a58935109eb7e2d1",
+        "mobilesdk_app_id": "1:267865195383:android:a58935109eb7e2d1",
         "android_client_info": {
           "package_name": "kejuntong.com.samplemoduleapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "490221670061-5jvv5d90f0qkd3909s59k932dio1d60c.apps.googleusercontent.com",
+          "client_id": "267865195383-fll5bcfp6v5qntbfi61amsoisdedauli.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBEQWZ0wRUbH9Q-iIeuv1pzY8KjTx7zivs"
+          "current_key": "AIzaSyAzrsVVPNgFmJA04cPapLDRkwWmXrY-7TI"
         }
       ],
       "services": {

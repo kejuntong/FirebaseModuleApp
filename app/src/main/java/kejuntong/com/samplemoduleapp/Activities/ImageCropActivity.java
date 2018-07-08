@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -38,7 +39,8 @@ public class ImageCropActivity extends Activity {
     final static int CAMERA_REQUEST = 1002;
     final static String TEMP_PHOTO = "temp_photo.jpg";
 
-    StorageReference mStorageRef;
+    FirebaseStorage mStorage;
+    FirebaseAuth mAuth;
 
     Button cancelButton;
     TextView cropButton;
@@ -51,7 +53,8 @@ public class ImageCropActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_crop);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference();
+        mStorage = FirebaseStorage.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         cancelButton = (Button) findViewById(R.id.cancel_button);
         cropButton = (TextView) findViewById(R.id.crop_button);
@@ -140,13 +143,23 @@ public class ImageCropActivity extends Activity {
                 Uri file = UtilMethods.getFileUriFromStorage(getApplicationContext(), Constants.CROPPED_IMAGE_FILE);
 
                 if (file != null){
-                    StorageReference riversRef = mStorageRef.child("images/test.jpg");
-                    riversRef.putFile(file)
+                    String photoPath = "test";
+                    Bundle bundle  = getIntent().getExtras();
+                    if (bundle != null) {
+                        photoPath = bundle.getString(Constants.PHOTO_PATH, "test");
+                    }
+                    mStorage.getReference().child(photoPath).putFile(file)
                             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                     // Get a URL to the uploaded content
                                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
+
+                                    if (downloadUrl != null) {
+                                        Intent intent = new Intent();
+                                        intent.putExtra(Constants.PHOTO_URL, downloadUrl.toString());
+                                        setResult(RESULT_OK, intent);
+                                    }
                                     finish();
                                 }
                             })

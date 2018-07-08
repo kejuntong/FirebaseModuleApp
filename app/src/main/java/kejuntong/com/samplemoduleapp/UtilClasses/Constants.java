@@ -13,6 +13,8 @@ public class Constants {
     public final static int PHOTO_FROM_GALLERY = 1;
     public final static int PHOTO_FROM_CAMERA = 2;
 
+    public final static String PHOTO_URL = "photo_url";
+    public final static String PHOTO_PATH = "photo_path";
     public final static String CROPPED_IMAGE_FILE = "cropped_image";
     public final static String CAPTURE_PHOTO_FROM = "photo_from";
 

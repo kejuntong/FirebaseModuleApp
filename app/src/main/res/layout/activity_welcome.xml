@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/name_and_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="12dp">
+
+        <RelativeLayout
+            android:id="@+id/add_photo_container"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20sp"
+            android:layout_marginRight="16dp">
+
+            <ImageView
+                android:id="@+id/btn_add_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="@drawable/add_photo_button_with_border"
+                android:textColor="@color/black"
+                android:clickable="true"/>
+
+            <TextView
+                android:id="@+id/txt_add_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Add\nPhoto"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"/>
+
+
+        </RelativeLayout>
+
+        <!--accepts only alphanumerical characters, hyphen and underscore -QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm0123456789_-->
+        <EditText
+            android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@+id/add_photo_container"
+            android:paddingBottom="3dp"
+            android:layout_gravity="center_horizontal|top"
+            android:background="@drawable/edit_text_background"
+            android:hint="user name"
+            android:inputType="textCapWords"
+            android:maxLines="1"
+            android:textCursorDrawable="@drawable/text_cursor_blue"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/black"
+            android:textColorHint="#8c8c8c"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/add_photo_container"
+            android:layout_below="@+id/first_name"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/add_photo_container"
+            android:text="user id: XXXXX"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/black"
+            android:textSize="11dp" />
+
+    </RelativeLayout>
+
+    <!--<TextView-->
+        <!--android:id="@+id/email_label"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/name_and_photo"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:text="email:"-->
+        <!--android:textSize="13dp"-->
+        <!--android:textColor="@color/black"/>-->
+
+    <!--<EditText-->
+        <!--android:id="@+id/email"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/email_label"-->
+        <!--android:background="@drawable/edit_text_background"-->
+        <!--android:hint="@string/enter_email"-->
+        <!--android:inputType="textEmailAddress"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:layout_marginEnd="10dp"-->
+        <!--android:textSize="16sp"-->
+        <!--android:imeOptions="actionDone"/>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/password_label"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/email"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="password:"-->
+        <!--android:textSize="13dp"-->
+        <!--android:textColor="@color/black"/>-->
+
+    <!--<EditText-->
+        <!--android:id="@+id/password"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/password_label"-->
+        <!--android:background="@drawable/edit_text_background"-->
+        <!--android:hint="@string/enter_password"-->
+        <!--android:inputType="textPassword"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:layout_marginEnd="10dp"-->
+        <!--android:textSize="16sp"-->
+        <!--android:imeOptions="actionDone"/>-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/password_again_label"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/password"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="re-enter password:"-->
+        <!--android:textSize="13dp"-->
+        <!--android:textColor="@color/black"/>-->
+
+    <!--<EditText-->
+        <!--android:id="@+id/password_again"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/password_again_label"-->
+        <!--android:background="@drawable/edit_text_background"-->
+        <!--android:hint="@string/retype_your_password"-->
+        <!--android:inputType="textPassword"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:layout_marginEnd="10dp"-->
+        <!--android:textSize="16sp"-->
+        <!--android:imeOptions="actionDone"/>-->
+
+    <Button
+        android:id="@+id/get_start"
+        android:layout_width="220dp"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/round_corner_button_primary"
+        android:textColor="@color/button_text"
+        android:layout_marginBottom="30dp"
+        android:text="@string/get_start"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+</RelativeLayout>

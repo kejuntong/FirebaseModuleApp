@@ -18,8 +18,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
+import kejuntong.com.samplemoduleapp.Interfaces.DatabaseCallback;
 import kejuntong.com.samplemoduleapp.R;
+import kejuntong.com.samplemoduleapp.UtilClasses.DatabaseMethods;
 
 /**
  * Created by kejuntong on 2018-04-22.
@@ -28,6 +31,7 @@ import kejuntong.com.samplemoduleapp.R;
 public class LoginActivity extends Activity {
     final static String TAG = "LoginActivity";
     private FirebaseAuth mAuth;
+    FirebaseDatabase firebaseDatabase;
 
     EditText emailInput;
     EditText passwordInput;
@@ -42,6 +46,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
 
         emailInput = findViewById(R.id.email_input);
         passwordInput = findViewById(R.id.password_input);
@@ -60,10 +65,20 @@ public class LoginActivity extends Activity {
 
         spinner = findViewById(R.id.progress_bar);
 
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null){
-            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            spinner.setVisibility(View.VISIBLE);
+            DatabaseMethods.getUserFromFirebase(firebaseDatabase, user.getUid(), new DatabaseCallback() {
+                @Override
+                public void onDataCallback(Object object) {
+                    spinner.setVisibility(View.GONE);
+                    if (object != null){
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    } else {
+                        startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
+                    }
+                }
+            });
         } else {
             Toast.makeText(LoginActivity.this, "null", Toast.LENGTH_LONG).show();
         }

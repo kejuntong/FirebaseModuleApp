@@ -20,6 +20,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 import kejuntong.com.samplemoduleapp.Fragments.AllPostFragment;
 import kejuntong.com.samplemoduleapp.Fragments.BaseFragment;
+import kejuntong.com.samplemoduleapp.Fragments.SettingFragment;
 import kejuntong.com.samplemoduleapp.Fragments.TestFragment;
 import kejuntong.com.samplemoduleapp.R;
 import kejuntong.com.samplemoduleapp.UtilClasses.Constants;
@@ -32,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseUser currentUser;
 
     AllPostFragment allPostFragment;
-    TestFragment testFragment;
+    SettingFragment settingFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,10 +97,10 @@ public class HomeActivity extends AppCompatActivity {
 
                         return true;
                     case R.id.navigation_page_3:
-                        if (testFragment == null){
-                            testFragment = new TestFragment();
+                        if (settingFragment == null){
+                            settingFragment = new SettingFragment();
                         }
-                        switchFragment(testFragment);
+                        switchFragment(settingFragment);
                         return true;
                 }
                 return false;

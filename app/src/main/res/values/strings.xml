@@ -5,6 +5,7 @@
     <string name="enter_password">Enter your password</string>
     <string name="forgot">Forgot?</string>
     <string name="login">LOGIN</string>
+    <string name="logout">LOGOUT</string>
     <string name="register">Register</string>
     <string name="register_cap">REGISTER</string>
     <string name="get_start">GET START</string>

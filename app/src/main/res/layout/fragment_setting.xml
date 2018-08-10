@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/name_and_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
+
+        <RelativeLayout
+            android:id="@+id/add_photo_container"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20sp"
+            android:layout_marginRight="16dp">
+
+            <ImageView
+                android:id="@+id/btn_add_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="@drawable/add_photo_button_with_border"
+                android:textColor="@color/black"
+                android:clickable="true"/>
+
+            <TextView
+                android:id="@+id/txt_add_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Add\nPhoto"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"/>
+
+
+        </RelativeLayout>
+
+        <!--accepts only alphanumerical characters, hyphen and underscore -QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm0123456789_-->
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@+id/add_photo_container"
+            android:maxLines="1"
+            android:text="user name"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/black"
+            android:textColorHint="#8c8c8c"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/add_photo_container"
+            android:layout_below="@+id/user_name"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/add_photo_container"
+            android:text="user id: XXXXX"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/black"
+            android:textSize="11dp" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/logout_button"
+        android:layout_width="220dp"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/round_corner_button_primary"
+        android:textColor="@color/button_text"
+        android:layout_marginBottom="30dp"
+        android:text="@string/logout"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+</RelativeLayout>

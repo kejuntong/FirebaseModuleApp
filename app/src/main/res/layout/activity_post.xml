@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RadioGroup
+        android:id="@+id/provide_or_request"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/option_provide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="provide help"
+            android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/option_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="look for help"
+            android:onClick="onRadioButtonClicked"/>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/contact_number_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/provide_or_request"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="contact number:"
+        android:textSize="13dp"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/contact_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/contact_number_label"
+        android:background="@drawable/edit_text_background"
+        android:hint="enter your contact number"
+        android:inputType="phone"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="16sp"
+        android:imeOptions="actionDone"/>
+
+    <TextView
+        android:id="@+id/post_title_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/contact_number"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="post title:"
+        android:textSize="13dp"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/post_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/post_title_label"
+        android:background="@drawable/edit_text_background"
+        android:hint="enter your post title"
+        android:maxLength="50"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="16sp"
+        android:imeOptions="actionDone"/>
+
+    <TextView
+        android:id="@+id/post_details_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/post_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="post details:"
+        android:textSize="13dp"
+        android:textColor="@color/black"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/post_details_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_below="@+id/post_details_label"
+        app:counterEnabled="true"
+        app:counterMaxLength="150">
+
+        <EditText
+            android:id="@+id/post_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:hint="enter your post details" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/post_photo"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_below="@+id/post_details_input_layout"
+        android:scaleType="centerCrop"
+        android:background="@drawable/add_photo_button_with_border"
+        android:clickable="true" />
+
+    <Button
+        android:id="@+id/post_button"
+        android:layout_width="220dp"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/round_corner_button_primary"
+        android:textColor="@color/button_text"
+        android:layout_marginBottom="30dp"
+        android:text="Post"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+</RelativeLayout>

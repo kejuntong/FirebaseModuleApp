@@ -18,12 +18,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import kejuntong.com.samplemoduleapp.Activities.HomeActivityBackup;
 import kejuntong.com.samplemoduleapp.Activities.ImageCropActivity;
 import kejuntong.com.samplemoduleapp.ModelClasses.Comment;
 import kejuntong.com.samplemoduleapp.ModelClasses.Post;
 import kejuntong.com.samplemoduleapp.ModelClasses.PostItem;
-import kejuntong.com.samplemoduleapp.ModelClasses.User;
 import kejuntong.com.samplemoduleapp.R;
 import kejuntong.com.samplemoduleapp.UtilClasses.Constants;
 
@@ -98,7 +96,7 @@ public class TestFragment extends BaseFragment {
             }
         });
 
-        setOnDataChange();
+//        setOnDataChange();
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,24 +162,24 @@ public class TestFragment extends BaseFragment {
         });
     }
 
-    private void setOnDataChange(){
-        DatabaseReference myRef = firebaseDatabase.getReference("post");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String allPosts = "";
-                for (DataSnapshot postData : dataSnapshot.getChildren()){
-                    Post post = postData.getValue(Post.class);
-                    allPosts = allPosts + "post by: " + post.getAuthor() +
-                            ", post content: " + post.getContent() + "\n";
-                }
-                textData.setText(allPosts);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
+//    private void setOnDataChange(){
+//        DatabaseReference myRef = firebaseDatabase.getReference("post");
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                String allPosts = "";
+//                for (DataSnapshot postData : dataSnapshot.getChildren()){
+//                    Post post = postData.getValue(Post.class);
+//                    allPosts = allPosts + "post by: " + post.getAuthor() +
+//                            ", post content: " + post.getContent() + "\n";
+//                }
+//                textData.setText(allPosts);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 }

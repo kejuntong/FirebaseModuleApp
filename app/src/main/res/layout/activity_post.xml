@@ -18,6 +18,7 @@
         <RadioButton android:id="@+id/option_request"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:layout_marginLeft="10dp"
             android:text="look for help"
             android:onClick="onRadioButtonClicked"/>
@@ -80,7 +81,7 @@
         android:layout_below="@+id/post_title"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="post details:"
         android:textSize="13dp"
         android:textColor="@color/black"/>

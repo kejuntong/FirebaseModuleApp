@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-import kejuntong.com.samplemoduleapp.Interfaces.DatabaseCallback;
+import kejuntong.com.samplemoduleapp.Interfaces.UtilCallbackInterface;
 import kejuntong.com.samplemoduleapp.ModelClasses.User;
 import kejuntong.com.samplemoduleapp.R;
 import kejuntong.com.samplemoduleapp.UtilClasses.Constants;
@@ -49,9 +49,9 @@ public class SettingFragment extends BaseFragment {
         userNameTextView = (TextView) fragmentView.findViewById(R.id.user_name);
         logoutButton = (Button) fragmentView.findViewById(R.id.logout_button);
 
-        DatabaseMethods.getUserFromFirebase(mDatabase, FirebaseAuth.getInstance().getCurrentUser().getUid(), new DatabaseCallback() {
+        DatabaseMethods.getUserFromFirebase(mDatabase, FirebaseAuth.getInstance().getCurrentUser().getUid(), new UtilCallbackInterface() {
             @Override
-            public void onDataCallback(Object object) {
+            public void onCallback(Object object) {
                 if (object != null){
                     currentUser = (User) object;
                     loadUserInfoToUI(currentUser);

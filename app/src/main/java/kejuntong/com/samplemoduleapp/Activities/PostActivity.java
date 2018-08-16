@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Map;
@@ -32,6 +33,7 @@ public class PostActivity extends AppCompatActivity {
 
     final static int UPLOAD_IMAGE_INTENT = 1001;
 
+    EditText creditText;
     EditText contactNumberText;
     EditText postTitleText;
     EditText postDetailsText;
@@ -41,6 +43,7 @@ public class PostActivity extends AppCompatActivity {
 
     // true for provide, false for request
     boolean provideOrRequest = false;
+    int credit;
     String contactNumber;
     String postTitle;
     String postDetails;
@@ -54,6 +57,7 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
+        creditText = findViewById(R.id.credit);
         contactNumberText = findViewById(R.id.contact_number);
         postTitleText = findViewById(R.id.post_title);
         postDetailsText = findViewById(R.id.post_details);
@@ -95,15 +99,20 @@ public class PostActivity extends AppCompatActivity {
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String creditString = creditText.getText().toString();
                 contactNumber = contactNumberText.getText().toString();
                 postTitle = postTitleText.getText().toString();
                 postDetails = postDetailsText.getText().toString();
 
-                if (postTitle.isEmpty()){
+                if (postTitle.isEmpty() || creditString.isEmpty()){
                     return;
                 }
 
-                Post post = new Post(contactNumber, postTitle, postDetails, postImageUrl);
+                // TODO::::::::::
+//                FirebaseAuth.getInstance().getCurrentUser().getDisplayName()
+
+
+                Post post = new Post(Integer.valueOf(creditString), contactNumber, postTitle, postDetails, postImageUrl);
 //                Map<String, Object> postValue = post.t;
 
                 progressBar.setVisibility(View.VISIBLE);

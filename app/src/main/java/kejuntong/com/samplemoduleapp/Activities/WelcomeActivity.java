@@ -2,6 +2,7 @@ package kejuntong.com.samplemoduleapp.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,12 +13,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 
+import kejuntong.com.samplemoduleapp.Interfaces.UtilCallbackInterface;
 import kejuntong.com.samplemoduleapp.ModelClasses.User;
 import kejuntong.com.samplemoduleapp.R;
 import kejuntong.com.samplemoduleapp.UtilClasses.Constants;
@@ -84,14 +89,24 @@ public class WelcomeActivity extends Activity {
 
                 String userId = mAuth.getCurrentUser().getUid();
                 String userEmail = mAuth.getCurrentUser().getEmail();
-                String userName = userNameInputText.getText().toString();
+                final String userName = userNameInputText.getText().toString();
                 User user = new User(userEmail, userPhotoUrl, userName);
                 spinner.setVisibility(View.VISIBLE);
                 mDatabase.getReference().child("user").child(userId).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        spinner.setVisibility(View.GONE);
-                        startActivity(new Intent(WelcomeActivity.this, HomeActivity.class));
+                        updateUserProfile(userName, userPhotoUrl, new UtilCallbackInterface() {
+                            @Override
+                            public void onCallback(Object isSuccess) {
+                                spinner.setVisibility(View.GONE);
+                                if ((boolean) isSuccess){
+                                    startActivity(new Intent(WelcomeActivity.this, HomeActivity.class));
+                                } else {
+
+                                }
+                            }
+                        });
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -101,6 +116,25 @@ public class WelcomeActivity extends Activity {
                 });
             }
         });
+    }
+
+    private void updateUserProfile(String name, String photoUrl, final UtilCallbackInterface cbi){
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name)
+                .setPhotoUri(Uri.parse(photoUrl))
+                .build();
+
+        mAuth.getCurrentUser().updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            cbi.onCallback(true);
+                        } else {
+                            cbi.onCallback(false);
+                        }
+                    }
+                });
     }
 
     @Override

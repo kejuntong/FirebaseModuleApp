@@ -25,10 +25,35 @@
     </RadioGroup>
 
     <TextView
-        android:id="@+id/contact_number_label"
+        android:id="@+id/credit_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/provide_or_request"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="credit:"
+        android:textSize="13dp"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/credit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/credit_label"
+        android:background="@drawable/edit_text_background"
+        android:hint="enter how much credit"
+        android:inputType="number"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="16sp"
+        android:imeOptions="actionDone"/>
+
+    <TextView
+        android:id="@+id/contact_number_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/credit"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"

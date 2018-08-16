@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
-import kejuntong.com.samplemoduleapp.Interfaces.DatabaseCallback;
+import kejuntong.com.samplemoduleapp.Interfaces.UtilCallbackInterface;
 import kejuntong.com.samplemoduleapp.R;
 import kejuntong.com.samplemoduleapp.UtilClasses.DatabaseMethods;
 
@@ -68,9 +68,9 @@ public class LoginActivity extends Activity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null){
             spinner.setVisibility(View.VISIBLE);
-            DatabaseMethods.getUserFromFirebase(firebaseDatabase, user.getUid(), new DatabaseCallback() {
+            DatabaseMethods.getUserFromFirebase(firebaseDatabase, user.getUid(), new UtilCallbackInterface() {
                 @Override
-                public void onDataCallback(Object object) {
+                public void onCallback(Object object) {
                     spinner.setVisibility(View.GONE);
                     if (object != null){
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));

@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Map;
@@ -43,10 +44,6 @@ public class PostActivity extends AppCompatActivity {
 
     // true for provide, false for request
     boolean provideOrRequest = false;
-    int credit;
-    String contactNumber;
-    String postTitle;
-    String postDetails;
     String postImageUrl;
 
     FirebaseDatabase mDatabase;
@@ -100,19 +97,29 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String creditString = creditText.getText().toString();
-                contactNumber = contactNumberText.getText().toString();
-                postTitle = postTitleText.getText().toString();
-                postDetails = postDetailsText.getText().toString();
+                String contactNumber = contactNumberText.getText().toString();
+                String postTitle = postTitleText.getText().toString();
+                String postDetails = postDetailsText.getText().toString();
 
                 if (postTitle.isEmpty() || creditString.isEmpty()){
                     return;
                 }
 
-                // TODO::::::::::
-//                FirebaseAuth.getInstance().getCurrentUser().getDisplayName()
+                Post post = new Post(provideOrRequest, Integer.valueOf(creditString), postTitle, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                post.contact_number = contactNumber;
+                post.post_details = postDetails;
+                post.post_photo_url = postImageUrl;
 
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                String posterId = user.getUid();
+                String posterName = user.getDisplayName();
+                String posterPhotoUrl = user.getPhotoUrl() == null ? "" : user.getPhotoUrl().toString();
 
-                Post post = new Post(Integer.valueOf(creditString), contactNumber, postTitle, postDetails, postImageUrl);
+                post.poster_id = posterId;
+                post.poster_name = posterName;
+                post.poster_photo_url = posterPhotoUrl;
+
+                // TODO:::::::
 //                Map<String, Object> postValue = post.t;
 
                 progressBar.setVisibility(View.VISIBLE);

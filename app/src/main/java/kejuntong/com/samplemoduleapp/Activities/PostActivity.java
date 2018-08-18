@@ -101,11 +101,13 @@ public class PostActivity extends AppCompatActivity {
                 String postTitle = postTitleText.getText().toString();
                 String postDetails = postDetailsText.getText().toString();
 
-                if (postTitle.isEmpty() || creditString.isEmpty()){
+                if (postId == null || postId.isEmpty() ||
+                        postTitle.isEmpty() || creditString.isEmpty()){
                     return;
                 }
 
-                Post post = new Post(provideOrRequest, Integer.valueOf(creditString), postTitle, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                Post post = new Post(postId, provideOrRequest, Integer.valueOf(creditString),
+                        postTitle, FirebaseAuth.getInstance().getCurrentUser().getUid());
                 post.contact_number = contactNumber;
                 post.post_details = postDetails;
                 post.post_photo_url = postImageUrl;

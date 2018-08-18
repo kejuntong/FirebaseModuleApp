@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import kejuntong.com.samplemoduleapp.Adapters.AllPostAdapter;
+import kejuntong.com.samplemoduleapp.ModelClasses.Post;
 import kejuntong.com.samplemoduleapp.ModelClasses.PostItem;
 import kejuntong.com.samplemoduleapp.ModelClasses.User;
 import kejuntong.com.samplemoduleapp.R;
@@ -37,9 +38,7 @@ public class AllPostFragment extends BaseFragment {
 
     RecyclerView allPostRecyclerView;
     AllPostAdapter mAdapter;
-    ArrayList<PostItem> postItems;
-    ArrayList<String> postKeys;
-    ArrayList<User> posters;
+    ArrayList<Post> postItems;
 
     public AllPostFragment(){
         setFragmentName(Constants.FIRST_FRAGMENT);
@@ -57,9 +56,7 @@ public class AllPostFragment extends BaseFragment {
         allPostRecyclerView.setLayoutManager(linearLayoutManager);
 
         postItems = new ArrayList<>();
-        postKeys = new ArrayList<>();
-        posters = new ArrayList<>();
-        mAdapter = new AllPostAdapter(getActivity(), postItems, postKeys, posters);
+        mAdapter = new AllPostAdapter(getActivity(), postItems);
         allPostRecyclerView.setAdapter(mAdapter);
 
         loadData();
@@ -68,7 +65,7 @@ public class AllPostFragment extends BaseFragment {
     }
 
     private void loadData(){
-        DatabaseReference myRef = firebaseDatabase.getReference("Posts2");
+        DatabaseReference myRef = firebaseDatabase.getReference("posts");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -76,53 +73,11 @@ public class AllPostFragment extends BaseFragment {
                 Log.d(TAG, "total count: " + postCount);
 
                 postItems.clear();
-                postKeys.clear();
-                posters.clear();
-                int position = 0;
                 for (DataSnapshot postData : dataSnapshot.getChildren()){
-                    PostItem post = postData.getValue(PostItem.class);
+                    Post post = postData.getValue(Post.class);
                     postItems.add(post);
-                    postKeys.add(postData.getKey());
-                    posters.add(null);
-                    if (post != null) {
-                        fetchUser(position, post.getUid(), postCount);
-                    }
-                    position++;
-                    Log.d(TAG, "position: " + position);
                 }
-
                 mAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void fetchUser(final int position, String uid, final long postCount){
-        if (uid == null){
-            return;
-        }
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("users").child(uid);
-
-//        DataSnapshot dataSnapshot = LoadFBDataSynchronously.loadSynchronous(myRef);
-//        User user = dataSnapshot.getValue(User.class);
-//        posters.set(position, user);
-//        if (position == postCount){
-//            mAdapter.notifyDataSetChanged();
-//        }
-
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                posters.set(position, user);
-
-                if (position == postCount-1){
-                    mAdapter.notifyDataSetChanged();
-                }
             }
 
             @Override

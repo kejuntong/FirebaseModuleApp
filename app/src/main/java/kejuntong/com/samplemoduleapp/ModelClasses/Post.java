@@ -9,6 +9,7 @@ import java.util.Map;
  */
 
 public class Post {
+    public String post_id;
     // true for provide, false for request
     public boolean provide_or_request;
     public String contact_name;
@@ -28,8 +29,10 @@ public class Post {
 
     }
 
-    public Post(boolean provideOrRequest, int credit, String number, String title, String details, String postPhotoUrl,
-                String posterId, String posterName, String posterPhotoUrl){
+    public Post(String postId,boolean provideOrRequest, int credit, String number,
+                String title, String details, String postPhotoUrl, String posterId,
+                String posterName, String posterPhotoUrl){
+        this.post_id = postId;
         this.provide_or_request = provideOrRequest;
         this.credit = credit;
         this.contact_number = number;
@@ -42,7 +45,8 @@ public class Post {
         this.poster_photo_url = posterPhotoUrl;
     }
 
-    public Post(boolean provideOrRequest, int credit, String title, String posterId){
+    public Post(String postId, boolean provideOrRequest, int credit, String title, String posterId){
+        this.post_id = postId;
         this.provide_or_request = provideOrRequest;
         this.credit = credit;
         this.post_title = title;
@@ -51,6 +55,7 @@ public class Post {
 
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
+        result.put("post_id", post_id);
         result.put("provide_or_request", provide_or_request);
         result.put("contact_name", contact_name);
         result.put("contact_number", contact_number);

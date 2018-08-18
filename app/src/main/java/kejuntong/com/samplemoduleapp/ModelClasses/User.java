@@ -6,9 +6,10 @@ package kejuntong.com.samplemoduleapp.ModelClasses;
 
 public class User {
 
-    private String email = "";
-    private String profileImageUrl = "";
-    private String username = "";
+    public String email;
+    public String profileImageUrl;
+    public String username;
+    public int credit = 10;
 
     public User(){
 

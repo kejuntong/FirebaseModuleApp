@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kejuntong.com.samplemoduleapp.Activities.PostCommentsActivity;
+import kejuntong.com.samplemoduleapp.Activities.UserProfileActivity;
+import kejuntong.com.samplemoduleapp.ModelClasses.Post;
 import kejuntong.com.samplemoduleapp.ModelClasses.PostItem;
 import kejuntong.com.samplemoduleapp.ModelClasses.User;
 import kejuntong.com.samplemoduleapp.R;
@@ -30,17 +32,12 @@ public class AllPostAdapter extends RecyclerView.Adapter<AllPostAdapter.ViewHold
 
     private Context mContext;
     private LayoutInflater mInflater;
-    private ArrayList<PostItem> postList;
-    private ArrayList<String> postKeys;
-    private ArrayList<User> userList;
+    private ArrayList<Post> postList;
 
-    public AllPostAdapter(Context context, ArrayList<PostItem> postItemList,
-                          ArrayList<String> postKeys, ArrayList<User> userList){
+    public AllPostAdapter(Context context, ArrayList<Post> postList){
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
-        this.postList = postItemList;
-        this.postKeys = postKeys;
-        this.userList = userList;
+        this.postList = postList;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,9 +48,10 @@ public class AllPostAdapter extends RecyclerView.Adapter<AllPostAdapter.ViewHold
 
         CircleImageView profileImage;
         TextView posterNameText;
+        TextView creditText;
         TextView captionText;
         ImageView postImage;
-        TextView lastCommentText;
+//        TextView lastCommentText;
 
         ImageButton replyButton;
         ImageButton likeButton;
@@ -65,9 +63,10 @@ public class AllPostAdapter extends RecyclerView.Adapter<AllPostAdapter.ViewHold
         ViewHolder viewHolder = new ViewHolder(view);
         viewHolder.profileImage = view.findViewById(R.id.profile_image);
         viewHolder.posterNameText = view.findViewById(R.id.poster_name);
+        viewHolder.creditText = view.findViewById(R.id.credit);
         viewHolder.captionText = view.findViewById(R.id.post_caption);
         viewHolder.postImage = view.findViewById(R.id.post_image);
-        viewHolder.lastCommentText = view.findViewById(R.id.text_last_comment);
+//        viewHolder.lastCommentText = view.findViewById(R.id.text_last_comment);
 
         viewHolder.replyButton = view.findViewById(R.id.button_reply);
         viewHolder.likeButton = view.findViewById(R.id.button_like);
@@ -76,40 +75,52 @@ public class AllPostAdapter extends RecyclerView.Adapter<AllPostAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        PostItem postItem = postList.get(position);
-        User user = userList.get(position);
+        Post post = postList.get(position);
 
-        if (user != null) {
-            holder.posterNameText.setText(user.getUsername());
-            Glide.with(mContext).load(user.getProfileImageUrl()).into(holder.profileImage);
+        holder.posterNameText.setText(post.poster_name);
+        String posterPhotoUrl = post.poster_photo_url;
+        if (posterPhotoUrl != null && !posterPhotoUrl.isEmpty()){
+            Glide.with(mContext).load(posterPhotoUrl).into(holder.profileImage);
         } else {
-            holder.posterNameText.setText("empty user");
             holder.profileImage.setImageBitmap(null);
         }
 
-        String imageUrl = postItem.getPhotoURL();
-        Glide.with(mContext).load(imageUrl).into(holder.postImage);
-
-        holder.captionText.setText(postItem.getCaption());
-
-        String lastComment = postItem.getLatestCommentText();
-        if (lastComment != null){
-            holder.lastCommentText.setVisibility(View.VISIBLE);
-            String commentText = postItem.getLatestCommentPoster() + ": " + lastComment;
-            holder.lastCommentText.setText(commentText);
-        } else {
-            holder.lastCommentText.setVisibility(View.GONE);
-        }
-
-        holder.replyButton.setOnClickListener(new View.OnClickListener() {
+        holder.profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String postKey = postKeys.get(position);
-                Intent intent = new Intent(mContext, PostCommentsActivity.class);
-                intent.putExtra(Constants.POST_KEY, postKey);
-                mContext.startActivity(intent);
+                mContext.startActivity(new Intent(mContext, UserProfileActivity.class));
             }
         });
+
+        Glide.with(mContext).load(post.post_photo_url).into(holder.postImage);
+
+        boolean provideOrRequest = post.provide_or_request;
+        if (provideOrRequest){
+            holder.creditText.setText("provide service, need credit: " + String.valueOf(post.credit));
+        } else {
+            holder.creditText.setText("request service, provide credit: " + String.valueOf(post.credit));
+        }
+
+        holder.captionText.setText(post.post_title);
+
+//        String lastComment = postItem.getLatestCommentText();
+//        if (lastComment != null){
+//            holder.lastCommentText.setVisibility(View.VISIBLE);
+//            String commentText = postItem.getLatestCommentPoster() + ": " + lastComment;
+//            holder.lastCommentText.setText(commentText);
+//        } else {
+//            holder.lastCommentText.setVisibility(View.GONE);
+//        }
+
+//        holder.replyButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String postKey = postKeys.get(position);
+//                Intent intent = new Intent(mContext, PostCommentsActivity.class);
+//                intent.putExtra(Constants.POST_KEY, postKey);
+//                mContext.startActivity(intent);
+//            }
+//        });
     }
 
     @Override

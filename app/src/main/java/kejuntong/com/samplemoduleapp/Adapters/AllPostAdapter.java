@@ -88,7 +88,9 @@ public class AllPostAdapter extends RecyclerView.Adapter<AllPostAdapter.ViewHold
         holder.profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext, UserProfileActivity.class));
+                Intent intent = new Intent(mContext, UserProfileActivity.class);
+                intent.putExtra(Constants.INTENT_EXTRA_USER_ID, postList.get(position).poster_id);
+                mContext.startActivity(intent);
             }
         });
 

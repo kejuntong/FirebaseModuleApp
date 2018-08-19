@@ -19,4 +19,6 @@ public class Constants {
     public final static String CAPTURE_PHOTO_FROM = "photo_from";
 
     public final static String POST_KEY = "post_key";
+
+    public final static String INTENT_EXTRA_USER_ID = "intent_extra_user_id";
 }

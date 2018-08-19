@@ -30,6 +30,7 @@ public class SettingFragment extends BaseFragment {
 
     ImageView addPhotoButton;
     TextView userNameTextView;
+    TextView remainingCreditText;
     Button logoutButton;
 
     User currentUser;
@@ -45,16 +46,20 @@ public class SettingFragment extends BaseFragment {
 
         mDatabase = FirebaseDatabase.getInstance();
 
-        addPhotoButton = (ImageView) fragmentView.findViewById(R.id.btn_add_photo);
-        userNameTextView = (TextView) fragmentView.findViewById(R.id.user_name);
-        logoutButton = (Button) fragmentView.findViewById(R.id.logout_button);
+        addPhotoButton = fragmentView.findViewById(R.id.btn_add_photo);
+        userNameTextView = fragmentView.findViewById(R.id.user_name);
+        remainingCreditText = fragmentView.findViewById(R.id.remaining_credits);
+        logoutButton = fragmentView.findViewById(R.id.logout_button);
 
-        DatabaseMethods.getUserFromFirebase(mDatabase, FirebaseAuth.getInstance().getCurrentUser().getUid(), new UtilCallbackInterface() {
+        DatabaseMethods.registerUserChangeListener(mDatabase, FirebaseAuth.getInstance().getCurrentUser().getUid(), new UtilCallbackInterface() {
             @Override
             public void onCallback(Object object) {
                 if (object != null){
                     currentUser = (User) object;
-                    loadUserInfoToUI(currentUser);
+                    Glide.with(getActivity()).load(currentUser.getProfileImageUrl()).into(addPhotoButton);
+                    userNameTextView.setText(currentUser.getUsername());
+
+                    remainingCreditText.setText("You have " + String.valueOf(currentUser.credit) + " credits");
                 }
             }
         });
@@ -68,10 +73,5 @@ public class SettingFragment extends BaseFragment {
         });
 
         return fragmentView;
-    }
-
-    private void loadUserInfoToUI(User user){
-        Glide.with(getActivity()).load(user.getProfileImageUrl()).into(addPhotoButton);
-        userNameTextView.setText(user.getUsername());
     }
 }
